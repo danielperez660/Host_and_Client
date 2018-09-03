@@ -3,11 +3,22 @@ from tkinter import *
 import threading
 from UI import UI
 import sqlite3
+from datetime import datetime
 
 conn = sqlite3.connect('connections.db')
+c = conn.cursor()
+
+
+try:
+    c.execute("""CREATE TABLE connections
+                  (ip text primary key,id text, time date)""")
+
+    conn.commit()
+except sqlite3.OperationalError:
+    pass
+
 
 class Connection(threading.Thread):
-
 
     def run(self):
         s = socket.socket()
@@ -32,4 +43,5 @@ x = Connection(name="TEST_VAL")
 x.start()
 z = UI(top, "HAXOR HOST")
 
+conn.close()
 top.mainloop()
