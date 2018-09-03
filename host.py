@@ -6,11 +6,11 @@ import sqlite3
 from datetime import datetime
 
 conn = sqlite3.connect('connections.db')
-c = conn.cursor()
+co = conn.cursor()
 
 
 try:
-    c.execute("""CREATE TABLE connections
+    co.execute("""CREATE TABLE connections
                   (ip text primary key,id text, time date)""")
 
     conn.commit()
@@ -30,7 +30,7 @@ class Connection(threading.Thread):
         while True:
             c, addr = s.accept()
             msg = "TEST"
-            print("Got connection from ", addr)
+            print("Got connection from ", addr, " @ ", datetime.today())
             c.send(msg.encode())
             print(c.recv(4096).decode())
             z.addr_disp(addr)
@@ -39,7 +39,7 @@ class Connection(threading.Thread):
 
 top = Tk()
 top.resizable(width=False, height=False)
-x = Connection(name="TEST_VAL")
+x = Connection(name="Host Socket")
 x.start()
 z = UI(top, "HAXOR HOST")
 
