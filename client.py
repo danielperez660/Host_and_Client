@@ -9,8 +9,10 @@ top.resizable(width=False, height=False)
 
 class UIClient(UI):
 
+    '''
     def test(self):
         self.label1.configure(text="YEET")
+    '''
 
 
 class Connection(threading.Thread):
@@ -26,7 +28,7 @@ class Connection(threading.Thread):
         s.close()
 
 
-z = UIClient(top, "HAXOR CLIENT")
+z = UIClient(top, "CLIENT")
 CSocket = Connection(name="Client Socket")
 CSocket.start()
 top.mainloop()

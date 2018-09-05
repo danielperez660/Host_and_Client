@@ -18,6 +18,19 @@ except sqlite3.OperationalError:
     pass
 
 
+class UIHost(UI):
+
+    def get_string(self):
+        msg = self.message.get()
+        self.message.delete(0, END)
+        #send_msg()
+
+
+def send_msg(msg, c):
+    c.send(msg.encode())
+    print(c.recv(4096).decode())
+
+
 class Connection(threading.Thread):
 
     def run(self):
@@ -30,9 +43,9 @@ class Connection(threading.Thread):
         while True:
             c, addr = s.accept()
             msg = "TEST"
+            send_msg(msg, c)
             print("Got connection from ", addr, " @ ", datetime.today())
-            c.send(msg.encode())
-            print(c.recv(4096).decode())
+            print(c)
             z.addr_disp(addr)
             c.close()
 
@@ -41,7 +54,7 @@ top = Tk()
 top.resizable(width=False, height=False)
 x = Connection(name="Host Socket")
 x.start()
-z = UI(top, "HAXOR HOST")
+z = UI(top, "HOST")
 
 conn.close()
 top.mainloop()
